@@ -1,2 +1,5 @@
-mysite/settings.py
 *.pyc
+mysite/settings.py
+mysite/settings.prueba.py
+.project
+.pydevproject
