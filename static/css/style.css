@@ -6,13 +6,14 @@ body{
 background-color:#dadada;
 }
 body > header{
-	text-aling:center;
+	text-align:center;
 }
 body > footer{
-	text-aling:center;
+	text-align:center;
 }
 body > section{
 	background-color:white;
 	margin:0 auto;
+	min-height:400px;
 	width:80%;
 }
