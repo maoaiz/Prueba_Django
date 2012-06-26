@@ -5,8 +5,7 @@ from django.conf import settings
 import commands
 import os
 
-
-# hace git pull
+# hace git pull 
 def update(solicitud):
     os.chdir(os.path.dirname(os.path.dirname(__file__)))
 
