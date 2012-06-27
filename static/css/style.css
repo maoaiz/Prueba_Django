@@ -11,7 +11,7 @@ body > header{
 }
 body > footer{
 	background-color:#ccc;
-	min-height:100px;
+	min-height:200px;
 	text-align:center;
 }
 body > section{
