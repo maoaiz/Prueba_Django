@@ -5,6 +5,60 @@
    <meta charset="utf-8" />
    <title>Hola mundo en HTML5</title>
    <link rel="stylesheet" type="text/css" href="{{ STATIC_PREFIX }}css/style.css" />
+    
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  
+   <script type="text/javascript"><!--
+
+   function main(){
+	$("#movie").text("Buscando....");
+	var imdbLink = "tt1285016";
+	var url = "http://www.imdbapi.com/?i=" + imdbLink;
+	$.ajax(
+			{
+				dataType	: "html",
+				type		: "POST",
+				url			: url, // ruta donde se encuentra nuestro action que procesa la peticion XmlHttpRequest
+			//	data		: "id_project="+id,
+				beforeSend	: function(data){
+					$("#load").html('Cargando...');
+				},
+				success		: function(requestData){ 	//Llamada exitosa
+					$("#movie").html("<pre>"+requestData+"</pre>");
+					//$("#movie").html("<pre>"+requestData["Title"]+"</pre>");
+				},
+				error		: function(requestData, strError, strTipoError){
+					alert("Errrror " + strTipoError +': ' + strError); //En caso de error mostraremos un alert
+				},
+				complete	: function(requestData, exito){ //fin de la llamada ajax.
+				// En caso de usar una gif (cargando...) aqui quitas la imagen
+					$("#load").html('');
+				}
+			});
+
+
+
+	   
+   }
+   $(document).on("ready",main);
+   /*
+		// IMDb ID to Search
+		var imdbLink = "tt1285016";
+		
+		// Send Request
+		var http = new XMLHttpRequest();
+		http.open("GET", "http://www.imdbapi.com/?i=" + imdbLink, false);
+		http.send(null);
+		
+		// Response to JSON
+		var imdbData = http.responseText;
+		var imdbJSON = eval("(" + imdbData + ")");
+		
+		// Returns Movie Title
+		alert(imdbJSON.Title);
+	*/
+	--></script>
+   
   </head>
   <body>
   <header>
@@ -12,6 +66,7 @@
    </header>
    <section>
    	<p>Probando los service hook de GitHub en mi servidor compartido</p>
+   	Pelicula: <span id="load"></span><span id="movie"></span>
    </section>
    <footer>
    <a href="http://twitter.com/Maoaiz">@MaoAiz</a>
