@@ -6,9 +6,12 @@ body{
 background-color:#dadada;
 }
 body > header{
+	min-height:50px;
 	text-align:center;
 }
 body > footer{
+	background-color:#defefe;
+	min-height:100px;
 	text-align:center;
 }
 body > section{
