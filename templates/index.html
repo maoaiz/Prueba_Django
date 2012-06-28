@@ -16,10 +16,11 @@
 		var q="avengers";
 		var q0 = q.substring(0, 1);
 		var url = "http://sg.media-imdb.com/suggests/"+q0+"/"+q+".json";
-		/*
+		url = "http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q="+q;
+	/*	
 		$.ajax(
 			{
-				dataType	: "html",
+				dataType	: "json",
 				type		: "GET",
 				url			: url, // ruta donde se encuentra nuestro action que procesa la peticion XmlHttpRequest
 			//	data		: "id_project="+id,
@@ -32,7 +33,7 @@
 					$("#movie").html("<pre>"+movie['Title']+" + "+movie['Year']+"</pre>");
 				},
 				error		: function(requestData, strError, strTipoError){
-					alert("Errrror " + strTipoError +': ' + strError+ ' , req: '+requestData);
+					alert("Error " + strTipoError +': ' + strError+ ' , req: '+requestData);
 					//En caso de error mostraremos un alert
 				},
 				complete	: function(requestData, exito){ //fin de la llamada ajax.
@@ -41,6 +42,7 @@
 				}
 			});
 */
+/*
 		// Standard
 		window.imdb$avengers = function (list) {
 			  //alert("llego a la funcion: "+ list.q);
@@ -56,14 +58,8 @@
 			  }
 			  $("#movie").append("</table>");
 		};
-		function mf(list,s,d){
-			//alert(list);
-			/*
-			for(i=0;i<list.d.length;i++){
-			  	$("#movie").append(list.d[i].l+",<br />");
-			  }*/
-		}
 		jQuery.getScript(url);
+		*/
 
 		// With local proxy to a PHP script replacing imdb$foo with a sanitized
 		// version of $_GET['callback']
@@ -72,9 +68,10 @@
 		// With local proxy to a PHP script to fix the callback, using jQuery automatic
 		// callback magic '?' value
 		//jQuery.getJSON( 'imdb.php?q=foo&callback=?', function (list) {
-		    /* ... */
-		//});
 
+		//});
+		
+$.getJSON(url+"",function(data) {alert("hola")});
 
 /*
 
