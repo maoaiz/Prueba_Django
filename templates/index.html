@@ -9,54 +9,151 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   
    <script type="text/javascript"><!--
-
    function main(){
-	$("#movie").text("Buscando....");
-	var imdbLink = "tt1285016";
-	var url = "http://www.imdbapi.com/?i=" + imdbLink;
-	$.ajax(
+		$("#movie").text("Buscando....");
+		var imdbLink = "tt1285016";
+		//var url = "http://www.imdbapi.com/?i=" + imdbLink;
+		var q="avengers";
+		var q0 = q.substring(0, 1);
+		var url = "http://sg.media-imdb.com/suggests/"+q0+"/"+q+".json";
+		/*
+		$.ajax(
 			{
 				dataType	: "html",
-				type		: "POST",
+				type		: "GET",
 				url			: url, // ruta donde se encuentra nuestro action que procesa la peticion XmlHttpRequest
 			//	data		: "id_project="+id,
 				beforeSend	: function(data){
 					$("#load").html('Cargando...');
 				},
 				success		: function(requestData){ 	//Llamada exitosa
-					$("#movie").html("<pre>"+requestData+"</pre>");
-					//$("#movie").html("<pre>"+requestData["Title"]+"</pre>");
+					var movie = jQuery.parseJSON(requestData);
+					//$("#movie").html("<pre>"+requestData+"</pre>");
+					$("#movie").html("<pre>"+movie['Title']+" + "+movie['Year']+"</pre>");
 				},
 				error		: function(requestData, strError, strTipoError){
-					alert("Errrror " + strTipoError +': ' + strError); //En caso de error mostraremos un alert
+					alert("Errrror " + strTipoError +': ' + strError+ ' , req: '+requestData);
+					//En caso de error mostraremos un alert
 				},
 				complete	: function(requestData, exito){ //fin de la llamada ajax.
 				// En caso de usar una gif (cargando...) aqui quitas la imagen
 					$("#load").html('');
 				}
 			});
+*/
+		// Standard
+		window.imdb$avengers = function (list) {
+			  //alert("llego a la funcion: "+ list.q);
+			  $("#movie").html("<table>");
+			  for(i=0;i<list.d.length;i++){
+				  try{
+				  	var src = list.d[i].i[0];
+				  }catch(Exception){
+					  //alert("hubo un error");
+					  src="http://i.media-imdb.com/images/mobile/film-40x54.png"
+				  }
+			  	$("#movie").append("<tr><td><img src='"+src+"' width='35px' /></td><td  valign='top'>"+list.d[i].l+"</td></tr>");
+			  }
+			  $("#movie").append("</table>");
+		};
+		function mf(list,s,d){
+			//alert(list);
+			/*
+			for(i=0;i<list.d.length;i++){
+			  	$("#movie").append(list.d[i].l+",<br />");
+			  }*/
+		}
+		jQuery.getScript(url);
+
+		// With local proxy to a PHP script replacing imdb$foo with a sanitized
+		// version of $_GET['callback']
+		//jQuery.getScript('imdb.php?q=foo&callback=myFunction');
+
+		// With local proxy to a PHP script to fix the callback, using jQuery automatic
+		// callback magic '?' value
+		//jQuery.getJSON( 'imdb.php?q=foo&callback=?', function (list) {
+		    /* ... */
+		//});
+
+
+/*
+
+imdb$avengers(
+		{
+			"v":1,
+			"q":"avengers",
+			"d":[ 
+					{ 
+						"y":2012,
+						"l":"The Avengers",
+						"q":"feature",
+						"id":"tt0848228",
+						"s":"Robert Downey Jr., Chris Evans",
+						"i":["http://ia.media-imdb.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_.jpg",692,1024]
+					},
+					{
+						"y":2010,
+						"l":"The Avengers: Earth's Mightiest Heroes",
+						"q":"TV series",
+						"id":"tt1626038",
+						"s":"Eric Loomis, Brian Bloom",
+						"i":["http://ia.media-imdb.com/images/M/MV5BMTMzNTk2ODEyN15BMl5BanBnXkFtZTcwNDA1ODAyNw@@._V1_.jpg",358,500]
+					},
+					{
+						"l":"The Avengers 2",
+						"q":"feature",
+						"id":"tt2395427"
+					},
+					{
+						"y":1998,
+						"l":"The Avengers",
+						"q":"feature",
+						"id":"tt0118661",
+						"s":"Ralph Fiennes, Uma Thurman",
+						"i":["http://ia.media-imdb.com/images/M/MV5BMjA3NzcxODYzNV5BMl5BanBnXkFtZTcwOTcwOTcxMQ@@._V1_.jpg",346,475]
+					},
+					{
+						"y":2006,
+						"l":"Ultimate Avengers",
+						"q":"video",
+						"id":"tt0491703",
+						"s":"Justin Gross, Grey DeLisle",
+						"i":["http://ia.media-imdb.com/images/M/MV5BMjA0MzAxMTU1NV5BMl5BanBnXkFtZTcwNDY0NDIzMQ@@._V1_.jpg",300,393]
+					},
+					{
+						"y":1961,"l":"The Avengers","q":"TV series","id":"tt0054518","s":"Patrick Macnee, Diana Rigg","i":["http://ia.media-imdb.com/images/M/MV5BNjkwMzMzOTQxMF5BMl5BanBnXkFtZTcwNjQzMzIzMQ@@._V1_.jpg",354,500]
+					},
+					{"y":2008,"l":"Next Avengers: Heroes of Tomorrow","q":"video","id":"tt1259998","s":"Noah Crawford, Brenna O'Brien","i":["http://ia.media-imdb.com/images/M/MV5BMTQ3NjExNjY4N15BMl5BanBnXkFtZTcwNTczODkwNQ@@._V1_.jpg",890,1331]
+					},
+					{
+						"y":2006,
+						"l":"Ultimate Avengers II",
+						"q":"video",
+						"id":"tt0803093",
+						"s":"Justin Gross, Grey DeLisle",
+						"i":["http://ia.media-imdb.com/images/M/MV5BMjExODM0MDgzOF5BMl5BanBnXkFtZTcwNTY5OTMzMQ@@._V1_.jpg",340,500]
+					}
+			]
+		}
+		)
+*/
 
 
 
-	   
+
+
+
+
+
+
+
+
+
+		
+
+		
    }
    $(document).on("ready",main);
-   /*
-		// IMDb ID to Search
-		var imdbLink = "tt1285016";
-		
-		// Send Request
-		var http = new XMLHttpRequest();
-		http.open("GET", "http://www.imdbapi.com/?i=" + imdbLink, false);
-		http.send(null);
-		
-		// Response to JSON
-		var imdbData = http.responseText;
-		var imdbJSON = eval("(" + imdbData + ")");
-		
-		// Returns Movie Title
-		alert(imdbJSON.Title);
-	*/
 	--></script>
    
   </head>
