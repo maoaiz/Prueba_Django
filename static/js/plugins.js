@@ -1,29 +1,44 @@
-function myFunction(list){
-    //alert("Entro a myFunction: "+ data[0].name);
-    //$("#movie").text(data[0].name)
-	
-    $("#movie").html("<table class='table table-bordered table-condensed'>");
+function createTable(list,query){
+    //    $("#movie > table").empty()//.slideToggle("slow");
+    $("#search-info > #result-num").text(list.length);
+    $("#search-info > #query-string").text(query);
+    $("#movie").fadeIn(160,function(e){
+        $("#movie > table").slideDown("slow")
+        });
+    var l = '';
     for(i=0;i<list.length;i++){
         try{
-            var src = list[i].posters[0].image.url;
             var url = list[i].url;
         }catch(Exception){
-            //alert("hubo un error");
-            src="http://i.media-imdb.com/images/mobile/film-40x54.png"
-            url=""
+            url="#error"
         }
-        $("#movie").append("<tr>" +
+        try{
+            var id=(list[i].imdb_id != null) ? "title/"+list[i].imdb_id : "find?q="+query+"&s=all" ;
+            var url_imdb = "http://www.imdb.com/"+id;
+        }catch(Exception){
+            url_imdb="http://www.imdb.com/find?q="+query+"&s=all";
+        }
+        try{
+            var src = list[i].posters[0].image.url;
+        }catch(Exception){
+            src="http://i.media-imdb.com/images/mobile/film-40x54.png"
+        }
+        var desc = ( list[i].overview != null ) ?(list[i].overview).substring(0, 400)+"...":"No Description";
+        l += "<tr>" +
             "<td valign='top' class='movie_image'>" +
-            "<a href='"+url+"' target='_blank'><img src='"+src+"' class='img50' /></a>" +
+                "<a href='"+url+"' target='_blank'><img src='"+src+"' class='img50' /></a>" +
             "</td>" +
             "<td valign='top' class='title'>" +
-            "<a href='"+url+"' target='_blank'>"+list[i].name +
-            "<div>"+list[i].overview+"</div></a>" +
+                "<a href='"+url+"' target='_blank'>"+list[i].name +
+                "<div>"+desc+"</div></a>" +
             "</td>" +
-            "</tr>");
+            "<td>"+
+                "<a href='"+url+"' class='bonton btn btn-success' target='_blank' >TMDB</a>"+
+                "<a href='"+url_imdb+"' class='bonton btn btn-warning' target='_blank' >IMDB</a>"+
+            "</td>"+
+        "</tr>";
     }
-    $("#movie").append("</table>");
-	
+    $("#movie > table").append(l);
 }
 function imdb1(url){
     (function($) {
@@ -89,7 +104,7 @@ function imdb2(url){
 //});
 }
 
-function imdb3(url){
+function imdb3(url,q){
     (function($) {
         $.ajax({
             type: 'GET',
@@ -98,35 +113,53 @@ function imdb3(url){
             //jsonpCallback: 'myFunction',
             contentType: 'application/json',
             dataType: 'jsonp',
+            beforeSend	: function(data){
+                $("#movie").fadeOut(500,function(e){
+                    $("#movie  > table").empty("");
+                })
+                $("#load").html("<img src='/static/img/load16.gif' />");
+            },
             success: function(json) {
                 console.dir(json);
-                myFunction(json);
+                if(json.length == 1 && json[0] == "Nothing found."){
+                    $("#movie").removeClass("hidden");
+                    $("#search-info > #result-num").text(0);
+                    $("#search-info > #query-string").text(q);
+                    $("#movie").fadeIn(160,function(e){
+                        $("#movie > table").slideDown("slow")
+                        });
+                }
+                else{
+                    createTable(json,q);
+                }
             },
             error: function(e) {
                 console.log(e.message);
                 alert("error")
+            },
+            complete	: function(requestData, exito){ 
+                $("#load").empty();
             }
         });
     })(jQuery);
 }
 
 function main(){
-//    var url = "http://sg.media-imdb.com/suggests/"+q0+"/"+q+".json";
-//    var url2 = "http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q="+q;
-//    var url3 = "http://www.imdb.com/xml/find?xml=1&tt=1&nm=on&q="+q;
-//    var url6="http://api.themoviedb.org/2.1/Movie.search/es-CO/xml/"+APIKEY+"/"+q;
-//    var url7="http://api.themoviedb.org/2.1/Movie.search/es-CO/json/"+APIKEY+"/"+q;
+    //    var url = "http://sg.media-imdb.com/suggests/"+q0+"/"+q+".json";
+    //    var url2 = "http://www.imdb.com/xml/find?json=1&nr=1&nm=on&q="+q;
+    //    var url3 = "http://www.imdb.com/xml/find?xml=1&tt=1&nm=on&q="+q;
+    //    var url6="http://api.themoviedb.org/2.1/Movie.search/es-CO/xml/"+APIKEY+"/"+q;
+    //    var url7="http://api.themoviedb.org/2.1/Movie.search/es-CO/json/"+APIKEY+"/"+q;
     $("#search-form").on("submit",search);
 }
 
 function search(e){
     e.preventDefault();
-    $("#movie").text("Buscando.... espere....");
     var q=$("#search").val();
     var APIKEY = "10562c9ee2722c0be2a1c3bc31e3028a";
     var url7="http://api.themoviedb.org/2.1/Movie.search/es-CO/json/"+APIKEY+"/"+q;
 
-    imdb3(url7);
+    imdb3(url7,q);
 }
 
 $(document).on("ready",main);

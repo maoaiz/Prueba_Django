@@ -95,6 +95,13 @@ img.img50{
     padding: 8px;
     width: 90%;
 }
+
+.bonton {
+    margin: 2px 5px 3px;
+    width: 50px;
+}
+
+
 @media screen and (max-width:979px){
     #search-form{
         margin-left: 20px;
