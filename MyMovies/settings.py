@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+     ('Mauricio Aizaga', 'mauricioaizaga@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -23,7 +23,7 @@ DATABASES = {
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-#        'NAME': 'sintramu_django_test',                      # Or path to database file if using sqlite3.
+#        'NAME': 'sintramu_mymovies',                      # Or path to database file if using sqlite3.
 #        'USER': 'sintramu_django',                      # Not used with sqlite3.
 #        'PASSWORD': 'django',                  # Not used with sqlite3.
 #        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.

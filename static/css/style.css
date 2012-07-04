@@ -5,6 +5,9 @@
 .b{
     border: solid thin #dadada;
 }
+.dropdown-menu li .next-li, .dropdown-menu li p{
+    margin: 3px 12px;
+}
 body{
     /*background-color:#dadada;*/
 }
@@ -134,8 +137,9 @@ img.img50{
 }
 
 .fullname{
-    font-weight: bold;
     color: #333;
+    font-weight: bold;
+    margin-left: 0px;
 }
 .color-fff{
     color:#fff;
@@ -146,9 +150,6 @@ img.img50{
     width: 80%;
 }
 
-.dropdown-menu li .next-li, .dropdown-menu li p{
-    margin: 3px 12px;
-}
 #btn-login{
     margin-right: 10px;
 }
