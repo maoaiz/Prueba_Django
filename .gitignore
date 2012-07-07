@@ -1,5 +1,5 @@
 *.pyc
-mysite/settings.py
-mysite/settings.prueba.py
+MyMovies/settings.py
+MyMovies/settings.prueba.py
 .project
 .pydevproject
