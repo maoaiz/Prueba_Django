@@ -1,0 +1,11 @@
+{% extends "website/layout.html" %}
+{%block body%}
+<strong>Hola {{ user.username|upper }}</strong><br />
+<img src="{{ gravatar_url }}" />	
+<p>Ultimo logueo: {{ user.last_login}}.</p>
+<p>Eres miembro desde el {{ user.date_joined }} </p>
+{% endblock%}
+
+<hr>
+{% block jslink %}
+{% endblock %}

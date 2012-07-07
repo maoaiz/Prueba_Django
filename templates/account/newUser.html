@@ -1,0 +1,15 @@
+{% extends "website/layout.html" %}
+{%block body%}		
+	
+	<article class="esqred"><p>Formulario de registro <b>nuevos usuarios</b></p></article>
+	<article class="esqred" id="article_form">
+    		<div id="form">
+    			<h3>LLena el siguiente formulario para agregar un apunte.</h3>
+		    	<form name="Apuntes" action="" method="POST" >
+			    	{% csrf_token %}
+			    	<table>{{ formNewUser }}</table>
+			    	<input type="submit" name="submit" id="id_submit" class="submit"/>
+		    	</form>
+	    	</div>
+    </article>
+{% endblock%}

@@ -1,0 +1,47 @@
+			<div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/">My view movies</a>
+                    <div id="menu-login" class="btn-group pull-right">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="icon-user"></i>{% if user.is_authenticated %}{{user.username}}{% else %}Inicia sesi&oacute;n{% endif %}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated %}
+                            <li class="current-user">
+                                <a href="/account">
+                                    <div class="content-box">
+                                        <img class="size32 avatar" src="https://si0.twimg.com/profile_images/1391659719/mao_normal.jpg" alt="MaoAiz" />
+                                        <span class="fullname">Mi Cuenta</span>
+                                        <small class="metadata">Editar configuraci&oacute;n</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li><a href="#">Privacidad</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/account/logout/">Cerrar sesi&oacute;n</a></li>
+                            {% else %}
+                            <form method ="post" action="/account/login">
+                            	<li>{% csrf_token %}</li>
+                                <li><p>Inicia sesi&oacute;n</p></li>
+                                <li><input id="username"  name="username" class="input-small next-li" type="text" placeholder="Usuario" autofocus></li>
+                                <li><input id="password"  name="password" class="input-small next-li" type="password" placeholder="Contrase&ntilde;a" ></li>
+                                <a id="close-login-menu" class="pull-left" href="#">cerrar</a><input id="btn-login" class="input-small btn btn-primary next-li pull-right" type="submit" value="Entrar" >
+                            </form>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Inicio</a></li>
+                            <li><a href="#about">Acerca</a></li>
+                            <li><a href="#contact">Contacto</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
